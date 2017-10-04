@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Deck of Cards</title>
+    <link rel="stylesheet" type="text/css" href="deck_of_cards.css">
+  </head>
+  <body>
+      <script type="text/javascript">
+        console.log("Some text");
+        class Deck{
+            constructor(){
+              this.deck = []; //deck is initially an empty array
+            }
+            reset(){
+              const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
+              const pips = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
+              for(const suit in suits){
+                for(const pip in pips){
+                    this.deck.push(`${pips[pip]} of ${suits[suit]}`);
+                }
+              }
+              return this;
+            }
+            shuffle(){
+              let deckLength = this.deck.length;
+              let temp;
+              let randomCard;
+              //While there are elements to shuffle
+              while(deckLength){
+                //pick a remaining element
+                  randomCard = Math.floor(Math.random() * deckLength--);
+                //Swap
+                  temp = this.deck[deckLength];
+                  this.deck[deckLength] = this.deck[randomCard];
+                  this.deck[randomCard] = temp;
+              }
+              return this;
+            }
+            deal(){
+              return this.deck.pop();
+            }
+        }
+        class Player{
+            constructor(name){
+              this.name = name;
+              this.hand = [];
+            }
+
+            dealToPlayer(deck){
+              this.hand.push(deck.deal());
+              console.log(this.hand);
+              return this;
+            }
+
+            discard(){
+              this.hand.pop();
+              return this;
+            }
+        }
+        deck1 = new Deck;
+        deck1.reset();
+        console.log(deck1.deck);
+        deck1.shuffle();
+        console.log(deck1.deck);
+        console.log(deck1.deal());
+        player1 = new Player("Grant");
+        player1.dealToPlayer(deck1).dealToPlayer(deck1).discard();
+        console.log(player1.hand);
+      </script>
+      <h1>Deck of Cards</h1>
+  </body>
+</html>
